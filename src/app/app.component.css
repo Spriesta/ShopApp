@@ -2,6 +2,8 @@
   border: 1px solid red;
 }
 
+
+
 .green-border {
   border: 1px solid green;
 }
@@ -53,4 +55,5 @@ table .total {
   border: none;
   background-color: transparent;
   text-align: center;
+
 }

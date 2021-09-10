@@ -11,8 +11,7 @@ export class AppComponent {
 
   products = products ;
 
-  basket:Product[] =[];
-
+  basket:Product[] =[]; // basket dediği yer sepet
 
 
 
@@ -25,11 +24,39 @@ export class AppComponent {
     return total.toFixed(2)+ ' TL'
   }
 
+  removeIfZero(product:Product){
+
+    if (product.quantity == 0 ) {
+      let index = this.basket.indexOf(product)
+      this.basket.splice(index,1)
+    }
+
+  }
+
+  addIfNotInBasket(product:Product):void{
+    if (!this.basket.includes(product) && product.quantity > 0 ) {
+      this.basket.push(product)
+    }
+  }
+
+  updateBasket(product:Product):void{
+    this.removeIfZero(product)
+
+    this.addIfNotInBasket(product)
+  }
 
 
-  decreaseAmount(){
-    // ürün miktarı sıfır ise pasif veya azalt
+  decreaseAmount(product:Product):void{
+    // ürün miktarı sıfır ise birşey yapma
+    if (product.quantity == 0 ) {
+      return;
+    }
 
+    // ürün miktarı azalt
+    product.quantity --;
+
+    //ürün miktarı sıfır ise sepetten çıkar
+    this.removeIfZero(product)
   }
 
 
