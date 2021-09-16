@@ -1,0 +1,14 @@
+<div class="d-flex align-items-start" *ngIf="product">
+  <img [src]="product.photoPath"   width="300" class="me-3">
+  <div>
+    <h2>{{product.name}}</h2>
+    <p>{{product.info}}</p>
+    <div class="mt-4 price">Sadece {{product.price.toFixed(2)}} TL ! </div>
+  </div>
+</div>
+
+
+<div class="mt-5">
+<h3>İlgilinizi Çekebilecek Ürünler</h3>
+<app-product-card *ngFor="let product of relatedProducts"[product]="product"></app-product-card>
+</div>

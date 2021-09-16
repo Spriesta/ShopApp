@@ -1,4 +1,4 @@
-import { ShopService,Order } from './../shop.service';
+import { ShopService,Order,Product } from './../shop.service';
 import { OrdersComponent } from './../orders/orders.component';
 import { Component,  } from '@angular/core';
 import { products } from "../products";  //karışıklık olmasın diye products.ts oluşturdum ve buraya import edip instance oluşturup rahatça ulaştım
@@ -15,7 +15,9 @@ export class ProductsComponent  {
 
   basket:Product[] =[]; // basket dediği yer sepet
 
-
+  ngOnInit():void{
+    this.basket=this.shopService.basket;
+  }
 
   constructor(private shopService :ShopService){}
 
@@ -29,56 +31,6 @@ export class ProductsComponent  {
     return total;
   }
 
-  removeIfZero(product:Product){
-
-    if (product.quantity == 0 ) {
-      let index = this.basket.indexOf(product)
-      this.basket.splice(index,1)
-    }
-
-  }
-
-  addIfNotInBasket(product:Product):void{
-    if (!this.basket.includes(product) && product.quantity > 0 ) {
-      this.basket.push(product)
-    }
-  }
-
-  updateBasket(product:Product):void{
-    this.removeIfZero(product)
-
-    this.addIfNotInBasket(product)
-  }
-
-
-  decreaseAmount(product:Product):void{
-    // ürün miktarı sıfır ise birşey yapma
-    if (product.quantity == 0 ) {
-      return;
-    }
-
-    // ürün miktarı azalt
-    product.quantity --;
-
-    //ürün miktarı sıfır ise sepetten çıkar
-    this.removeIfZero(product)
-  }
-
-
-
-  increaseAmount(product :Product):void{
-    // sepette yoksa ekliyoruz
-    if (!this.basket.includes(product)) {
-      this.basket.push(product);
-    }
-
-
-    // ürün miktarını arttırıyoruz
-    product.quantity++ ;
-  }
-
-
-
 
   createOrder():void{ // burda oluşturduğumuz veriyi orders'a aktarmak için servisleri kullanıyoruz
 
@@ -89,32 +41,24 @@ export class ProductsComponent  {
       };
 
 
-
-      this.shopService.orders.push(order);
+      if (order.count == 0) {}
+       else {
+        this.shopService.orders.push(order);
 
       for(let item of this.basket){
-      this.basket=[];
+      this.basket.length=0;
       item.quantity =  0;
       }
+      }
+
     }
 
   }
 
 
-
-
-
 }
 
-  type Product =
-  {
-    id : number,
-    name : string,
-    photoPath : string,
-    price : number,
-    unit : string,
-    quantity : number
-  }
+
 
 
 
