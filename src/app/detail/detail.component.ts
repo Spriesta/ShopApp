@@ -17,10 +17,17 @@ export class DetailComponent implements OnInit {
   constructor(private route :ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.productId = this.route.snapshot.paramMap.get("productId") as string; //dinamik router kısmı buralar activatedroute
+    this.route.paramMap.subscribe(paramMap =>{
+      this.productId = paramMap.get("productId") as string; //dinamik router kısmı buralar activatedroute
     this.product = products.find  (p=>p.id == Number(this.productId));
 
     this.relatedProducts = products.filter(p=>this.product?.related.includes(p.id));
+    }
+
+    )
+
+
+
   }
 
 }
