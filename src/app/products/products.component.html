@@ -1,1 +1,49 @@
-<p>products works!</p>
+<div class="row">
+
+  <div class="col-sm-7">
+    <h1>Ürünler</h1>  <!-- ngFor sayesinde datadaki verileri product olarak döndürdük ve ilgili değişkene göre aşağıdakiler sıraladık-->
+    <div *ngFor="let product of products"   class="product">
+      <img [src] = "product.photoPath" [alt]="product.name" >
+      <div class="product-name">{{product.name}}</div>
+      <div class="product-price">{{product.price.toFixed(2)}} TL</div>
+      <div class="quantity-bar d-flex justify-content-between align-items-center mt-2">
+        <button (click)="decreaseAmount(product)" class="btn btn-sm btn-danger">-</button>
+        <input type="text"  [(ngModel)]="product.quantity"(ngModelChange)="updateBasket(product)"     >  <!--  çift taraflı binding için ngModel kullanılıyor bak bu çok önemli -->
+        <button (click)="increaseAmount(product)" class="btn btn-sm btn-success">+</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-sm-5">
+    <h1>Sepet</h1>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Ürün</th>
+          <th>Miktar</th>
+          <th class="text-end">Fiyat</th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item  of basket">
+          <td>{{item.name}}</td>
+          <td>{{item.quantity}} {{item.unit}}</td>
+          <td class="text-end">{{(item.price*item.quantity).toFixed(2)}}</td>
+        </tr>
+      </tbody>
+
+      <tfoot class="total">
+        <tr>
+          <td colspan="2">Toplam</td>
+          <td class="text-end">{{getTotal().toFixed(2)}} TL</td>
+        </tr>
+      </tfoot>
+    </table>
+    <button class="btn btn-success" (click)="createOrder()">Sipariş Oluştur</button>
+
+  </div>
+
+</div>

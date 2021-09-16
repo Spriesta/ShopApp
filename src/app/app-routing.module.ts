@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
 
+  {path:'',redirectTo:'products',pathMatch:'full'},  // ilk açıldığında boş sayfa göstermemesi için direkt buraya yönlendiriyoruz
   {path:'products',component:ProductsComponent},
   {path:'orders',component:OrdersComponent},
 

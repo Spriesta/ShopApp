@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+
+.red-border {
+  border: 1px solid red;
+}
+
+
+
+.green-border {
+  border: 1px solid green;
+}
+
+.blue-border {
+  border: 1px solid blue;
+}
