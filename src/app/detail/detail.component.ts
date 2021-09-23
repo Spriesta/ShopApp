@@ -1,7 +1,9 @@
-import { products } from './../products';
+// import { products } from './../products';
 import { Product } from './../shop.service';
 import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
@@ -14,14 +16,26 @@ export class DetailComponent implements OnInit {
 
   relatedProducts:Product[] = []
 
-  constructor(private route :ActivatedRoute) { }
+  constructor(
+    private http:HttpClient,
+    private route :ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap =>{
-      this.productId = paramMap.get("productId") as string; //dinamik router kısmı buralar activatedroute
-    this.product = products.find  (p=>p.id == Number(this.productId));
 
-    this.relatedProducts = products.filter(p=>this.product?.related.includes(p.id));
+      this.productId = paramMap.get("productId") as string; //dinamik router kısmı buralar activatedroute
+
+      this.http.get<Product>("/api/products/"+this.productId).subscribe(product =>{
+        this.product = product
+
+        this.http.get<Product[]>("/api/products").subscribe(products=>{
+          this.relatedProducts = products.filter(p=>this.product?.related.includes(p.id));
+
+        })
+      })
+
+
+
     }
 
     )

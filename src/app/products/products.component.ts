@@ -1,7 +1,11 @@
+// import { products } from './../products';
 import { ShopService,Order,Product } from './../shop.service';
 import { OrdersComponent } from './../orders/orders.component';
 import { Component,  } from '@angular/core';
-import { products } from "../products";  //karışıklık olmasın diye products.ts oluşturdum ve buraya import edip instance oluşturup rahatça ulaştım
+// import { products } from "../products";  //karışıklık olmasın diye products.ts oluşturdum ve buraya import edip instance oluşturup rahatça ulaştım
+import { HttpClient } from "@angular/common/http";
+
+
 
 @Component({
   selector: 'app-products',
@@ -11,15 +15,25 @@ import { products } from "../products";  //karışıklık olmasın diye products
 export class ProductsComponent  {
 
 
-  products = products ;
+  products : Product[] =[] ;
 
   basket:Product[] =[]; // basket dediği yer sepet
 
+
+ constructor(
+    private http : HttpClient,
+    private shopService :ShopService){}
+
+
   ngOnInit():void{
     this.basket=this.shopService.basket;
+
+    this.http.get<Product[]>("/api/products").subscribe(products =>{
+      this.products=products
+    })
   }
 
-  constructor(private shopService :ShopService){}
+
 
 
   getTotal() :number{

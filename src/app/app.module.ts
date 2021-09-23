@@ -7,6 +7,7 @@ import { ProductsComponent } from './products/products.component';
 import { OrdersComponent } from './orders/orders.component';
 import { DetailComponent } from './detail/detail.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import {HttpClient, HttpClientModule  } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -15,11 +16,13 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     OrdersComponent,
     DetailComponent,
     ProductCardComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
