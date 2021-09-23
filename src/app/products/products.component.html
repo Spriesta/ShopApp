@@ -35,6 +35,10 @@
     </table>
     <button class="btn btn-success" (click)="createOrder()">Sipariş Oluştur</button>
 
+    <div *ngIf="orderCreated" class="alert alert-success mt-3">
+      Siparişiniz Başarıyla Sepete Aktarıldı !
+    </div>
+
   </div>
 
 </div>

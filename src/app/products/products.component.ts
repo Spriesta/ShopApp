@@ -19,6 +19,8 @@ export class ProductsComponent  {
 
   basket:Product[] =[]; // basket dediği yer sepet
 
+  orderCreated = false ;
+
 
  constructor(
     private http : HttpClient,
@@ -62,13 +64,14 @@ export class ProductsComponent  {
       for(let item of this.basket){
       this.basket.length=0;
       item.quantity =  0;
+
+      this.orderCreated=true;
+      setTimeout(()=> this.orderCreated = false,3000)
       }
       }
 
     }
-
   }
-
 
 }
 
